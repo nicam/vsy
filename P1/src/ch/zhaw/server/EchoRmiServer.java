@@ -1,3 +1,5 @@
+package ch.zhaw.server;
+
 import ch.zhaw.CommandInterpreter;
 
 import java.rmi.Naming;

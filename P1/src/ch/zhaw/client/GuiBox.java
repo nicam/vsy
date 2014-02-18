@@ -1,4 +1,6 @@
-package ch.zhaw;
+package ch.zhaw.client;
+
+import ch.zhaw.CommandInterpreter;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -92,6 +94,9 @@ public class GuiBox extends JFrame implements ActionListener {
             Object rmiServer = Naming.lookup(rmiServerName);
             if(rmiServer instanceof CommandInterpreter){
                 this.server = (CommandInterpreter) rmiServer;
+                this.serverName = rmiServerName;
+                this.setTitle("Connected to " + this.serverName);
+                this.clear();
             }
         } catch (NotBoundException e) {
             e.printStackTrace();
