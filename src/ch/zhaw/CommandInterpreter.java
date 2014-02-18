@@ -1,4 +1,6 @@
-/** CommandInterpreter 
+package ch.zhaw;
+
+/** CommandInterpreter
  Dieses Interface wird von jedem Server implementiert.
  @author E. Mumprecht
  @version 1.0 -- Gerüst für irgendeinen Server

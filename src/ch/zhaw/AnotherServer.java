@@ -1,4 +1,6 @@
-/** AnyServer 
+package ch.zhaw;
+
+/** AnyServer
  @author E. Mumprecht
  @version 1.0 -- Gerüst für irgendeinen "Server"
  */
