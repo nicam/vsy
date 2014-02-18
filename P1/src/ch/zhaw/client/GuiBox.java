@@ -25,6 +25,7 @@ public class GuiBox extends JFrame implements ActionListener {
 
     private String serverName = null;
 
+    private String rmiServerName;
 
     private MenuItem clear;
     private MenuItem connect;
@@ -89,7 +90,8 @@ public class GuiBox extends JFrame implements ActionListener {
     }
 
     private void connectToRmiServer(){
-        String rmiServerName = (String)JOptionPane.showInputDialog("Bitte RmiServernamen eingeben:");
+        String rmiServerName = (String)JOptionPane.showInputDialog(null, "Select Server", this.rmiServerName);
+        this.rmiServerName = rmiServerName;
         try {
             Object rmiServer = Naming.lookup(rmiServerName);
             if(rmiServer instanceof CommandInterpreter){
@@ -99,6 +101,7 @@ public class GuiBox extends JFrame implements ActionListener {
                 this.clear();
             }
         } catch (NotBoundException e) {
+            log(e.getMessage());
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -114,6 +117,7 @@ public class GuiBox extends JFrame implements ActionListener {
                 this.output.append(result + "\n");
             } catch (RemoteException e) {
                 e.printStackTrace();
+                this.server = null;
             }
         } else {
             this.connectToRmiServer();
