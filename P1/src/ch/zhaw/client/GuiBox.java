@@ -107,45 +107,6 @@ public class GuiBox extends JFrame implements ActionListener {
         }
     }
 
-    private void connectToServer() {
-        FileDialog fileDialog = new FileDialog(this, "Please select server class", 0);
-        fileDialog.setVisible(true);
-
-        String paramString = fileDialog.getFile();
-
-        if (paramString == null) {
-            return;
-        }
-        paramString = paramString.replace(".class", "");
-
-        log("Selected class name = " + paramString);
-
-        String packageName;
-        try {
-            packageName = this.getClass().getPackage().getName();
-            log("Our own package is [" + packageName + "]");
-            paramString = packageName + "." + paramString;
-        } catch (Exception localException2) {
-            log("No package Name");
-        }
-
-        log("complete class name appears to be " + paramString);
-
-        try {
-            Object object = Class.forName(paramString).newInstance();
-            if ((object instanceof CommandInterpreter)) {
-                this.server = (CommandInterpreter) object;
-                this.serverName = paramString;
-                this.setTitle("Connected to " + this.serverName);
-                this.clear();
-            } else {
-                log("Class " + paramString + " is not instance of CommandInterpreter");
-            }
-        } catch (Exception localException1) {
-            log("Problem connecting to " + paramString + " (" + localException1.toString() + ")");
-        }
-    }
-
     private void interpret(String paramString) {
         if (this.server != null) {
             try {
@@ -155,7 +116,7 @@ public class GuiBox extends JFrame implements ActionListener {
                 e.printStackTrace();
             }
         } else {
-            this.connectToServer();
+            this.connectToRmiServer();
             this.interpret(paramString);
         }
     }
@@ -170,7 +131,6 @@ public class GuiBox extends JFrame implements ActionListener {
         }
 
         if (actionEvent.getSource() == this.connect) {
-            //this.connectToServer();
             this.connectToRmiServer();
         }
 

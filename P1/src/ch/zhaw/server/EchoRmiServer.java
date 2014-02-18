@@ -15,7 +15,7 @@ public class EchoRmiServer extends UnicastRemoteObject implements CommandInterpr
 
     public static void main(String[] args) throws Exception {
         EchoRmiServer server = new EchoRmiServer();
-        Naming.bind("VSYEchoRmiServer", server);
+        Naming.rebind("VSYEchoRmiServer", server);
     }
 
     @Override
