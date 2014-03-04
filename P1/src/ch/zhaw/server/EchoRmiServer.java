@@ -29,6 +29,12 @@ public class EchoRmiServer extends UnicastRemoteObject implements CommandInterpr
             int i = 3/0;
         } else if(command.toLowerCase().equals("threading")){
             return "" + Thread.currentThread().getId();
+        } else if(command.toLowerCase().contains("wait")){
+            Date now = new Date();
+            while(now.getTime() + Integer.parseInt(command.replace("wait", "")) * 1000 >= new Date().getTime()){}
+            String response = "waited for " + command.replace("wait", "") + " seconds";
+            System.out.println(Thread.currentThread().getId() + " : " + response);
+            return response;
         }
         return Thread.currentThread().getId() + " : " + new Date() + ": echo: " + command;
     }
