@@ -1,6 +1,7 @@
 package ch.zhaw.client;
 
 import ch.zhaw.CommandInterpreter;
+import ch.zhaw.server.EchoRmiServer;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -20,6 +21,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Date;
 
 public class GuiBox extends JFrame implements ActionListener {
 
@@ -113,7 +115,17 @@ public class GuiBox extends JFrame implements ActionListener {
     private void interpret(String paramString) {
         if (this.server != null) {
             try {
+                Date start = new Date();
                 String result = this.server.interpret(paramString);
+                Date end = new Date();
+                System.out.println("RMI call took: " + (end.getTime() - start.getTime()));
+
+                EchoRmiServer localserver = new EchoRmiServer();
+                Date start2 = new Date();
+                localserver.interpret(paramString);
+                Date end2 = new Date();
+                System.out.println("Object call took: " + (end2.getTime() - start2.getTime()));
+
                 this.output.append(result + "\n");
             } catch (RemoteException e) {
                 e.printStackTrace();
