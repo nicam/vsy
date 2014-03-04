@@ -6,26 +6,26 @@
 
 #include "dir.h"
 #include <dirent.h>
+#include <unistd.h>
 
 readdir_res *
 readdir_1_svc(nametype *argp, struct svc_req *rqstp)
 {
-
 	static readdir_res  result;
-
 	namelist nl; namelist *nlp;
-        DIR *dirp;
-        struct dirent *d;
+	DIR *dirp;
+	struct dirent *d;
+	xdr_free((xdrproc_t) xdr_readdir_res, (char*) &result);
+	dirp= opendir(*argp);
+	nlp = &result.readdir_res_u.list;
 
-        xdr_free((xdrproc_t) xdr_readdir_res, (char*) &result);
+	sleep(5);
 
-        dirp= opendir(*argp);
-        nlp = &result.readdir_res_u.list;
-        while (d = readdir(dirp)) {
-	    nl = *nlp = malloc(sizeof(namenode));
-	    nl->name = strdup(d->d_name);
-	    nlp = &nl->next;
-        }
+	while (d = readdir(dirp)) {
+		nl = *nlp = malloc(sizeof(namenode));
+		nl->name = strdup(d->d_name);
+		nlp = &nl->next;
+	}
 	*nlp = NULL;
 	/* Return the result */
 	result.errno = 0;

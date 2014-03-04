@@ -20,6 +20,7 @@ dirprog_1( char* host )
 	}
 
 	namelist nl;
+	char* dirname = "/Users/adrianbertschi/Documents/Work/Projects/ZHAW";
 	result_1 = readdir_1(&dirname, clnt);
 	if (result_1 == (readdir_res *) NULL) {
 		clnt_perror (clnt, "call failed");
