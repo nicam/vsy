@@ -6,6 +6,7 @@
 
 #include "versand.h"
 #include <stdio.h> 
+#include <time.h>
 
 
 void
@@ -34,7 +35,15 @@ orderprog_1( char* host )
 	placeorder_1_arg.adress = "Hauptrasse 12 9500 Wil";
 	placeorder_1_arg.first = &item1;
 
-	result_1 = placeorder_1(&placeorder_1_arg, clnt);
+	time_t now = time(NULL);
+
+	int count = 0;
+	while(difftime(time(NULL), now) < 1) {
+		result_1 = placeorder_1(&placeorder_1_arg, clnt);
+		count++;
+	}
+	printf("did it for: %d times\n", count);
+
 	if (result_1 == NULL) {
 		clnt_perror(clnt, "call failed:");
 	}
