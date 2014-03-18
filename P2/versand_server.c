@@ -29,7 +29,7 @@ placeorder_1_svc(order *argp, struct svc_req *rqstp)
     item = item->next;
   }
 
-  fclose(file); /*done!*/ 
+  fclose(file);
 
   return(&result);
 }
