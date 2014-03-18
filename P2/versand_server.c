@@ -14,18 +14,19 @@ placeorder_1_svc(order *argp, struct svc_req *rqstp)
 
   FILE *file; 
   file = fopen("log.txt","a+");
+  result = 1; // Error by default
 
-  result = 0;
-  int orderCount = 0;
+  if (file == NULL) {
+    return(&result);
+  }
 
   item *item;
   item = argp->first;
-  // fprintf(file,"\n Kunde: %d Adresse: %s",argp->customer_number, argp->adress);
+  fprintf(file,"\n Kunde: %d Adresse: %s",argp->customer_number, argp->adress);
 
   while (item != NULL) {
-    orderCount++;
-    // fprintf(file,", Artikel: %u Menge: %d",item->item_number, item->count);
-    result = 1;
+    fprintf(file,", Artikel: %u Menge: %d",item->item_number, item->count);
+    result = 0; // No error if at least 1 article
     item = item->next;
   }
 

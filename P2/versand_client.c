@@ -42,7 +42,7 @@ orderprog_1( char* host )
 		result_1 = placeorder_1(&placeorder_1_arg, clnt);
 		count++;
 	}
-	printf("did it for: %d times\n", count);
+	printf("did it: %d times\n", count);
 
 	if (result_1 == NULL) {
 		clnt_perror(clnt, "call failed:");
