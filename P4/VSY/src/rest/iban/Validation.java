@@ -1,6 +1,7 @@
 package rest.iban;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,18 +23,16 @@ public class Validation {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String validate( @PathParam("number") String number ) throws IOException, JSONException {
 		if(IBanService.getInstance().getIBAN_Checker().IBAN_Checker(number).equals("OK")){
-			JSONResource result = new Resty().json("http://api.usergrid.com/nicam/accounts/accounts/");
+			String query = "Select * where iban = '" + number + "'";
+			JSONResource result = new Resty().json("http://api.usergrid.com/nicam/accounts/accounts/?ql=" + URLEncoder.encode(query, "UTF-8"));
 			JSONObject obj = result.object();
 			
-			JSONArray entities = (JSONArray) obj.get("entities");
-			for(int i=0; i<entities.length(); i++){
-				JSONObject entry = (JSONObject) entities.get(i);
-				String iban = (String) entry.get("IBAN");
-				if(iban.equals(number)){
-					JSONObject retObj = new JSONObject();
-					retObj.put("name", entry.get("name"));
-					return retObj.toString();
-				}
+			JSONObject entry = (JSONObject) ((JSONArray) obj.get("entities")).get(0);
+			String iban = (String) entry.get("IBAN");
+			if(iban.equals(number)){
+				JSONObject retObj = new JSONObject();
+				retObj.put("name", entry.get("name"));
+				return retObj.toString();
 			}
 		}
 		
