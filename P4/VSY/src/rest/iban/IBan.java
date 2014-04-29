@@ -58,8 +58,6 @@ public class IBan {
 
 				return retObj.toString();
 			}
-			
-			
 		}
 		
 		throw new WebApplicationException(400);
