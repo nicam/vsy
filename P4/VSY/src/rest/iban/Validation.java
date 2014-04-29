@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.ws.http.HTTPException;
 
 import us.monoid.json.JSONArray;
 import us.monoid.json.JSONException;
@@ -21,7 +22,24 @@ public class Validation {
 	@GET
 	@Path("/validate/{number}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String validate( @PathParam("number") String number ) throws IOException, JSONException {
+	public String validateIban(@PathParam("number") String number ) throws IOException, JSONException {
+		if(IBanService.getInstance().getIBAN_Checker().IBAN_Checker(number).equals("OK")){
+			JSONObject retObj = new JSONObject();
+			retObj.put("status", "valid");
+			return retObj.toString();
+		}
+		
+		JSONObject retObj = new JSONObject();
+		retObj.put("status", "invalid");
+		return retObj.toString();
+	}
+	
+	@GET
+	@Path("/accounts/{number}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String searchAccount(@PathParam("number") String number) throws IOException, JSONException {
+		JSONObject retObj = new JSONObject();
+		
 		if(IBanService.getInstance().getIBAN_Checker().IBAN_Checker(number).equals("OK")){
 			String query = "Select * where iban = '" + number + "'";
 			JSONResource result = new Resty().json("http://api.usergrid.com/nicam/accounts/accounts/?ql=" + URLEncoder.encode(query, "UTF-8"));
@@ -30,13 +48,15 @@ public class Validation {
 			JSONObject entry = (JSONObject) ((JSONArray) obj.get("entities")).get(0);
 			String iban = (String) entry.get("IBAN");
 			if(iban.equals(number)){
-				JSONObject retObj = new JSONObject();
 				retObj.put("name", entry.get("name"));
 				retObj.put("iban", iban);
+
 				return retObj.toString();
 			}
+			
+			throw new HTTPException(404);
 		}
 		
-		return "false";
+		throw new HTTPException(400);
 	}
 }
