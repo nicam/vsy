@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.http.HTTPException;
 
@@ -44,8 +45,12 @@ public class IBan {
 			String query = "Select * where iban = '" + number + "'";
 			JSONResource result = new Resty().json("http://api.usergrid.com/nicam/accounts/accounts/?ql=" + URLEncoder.encode(query, "UTF-8"));
 			JSONObject obj = result.object();
+			JSONArray array = (JSONArray) obj.get("entities");
+			if(array.length() == 0) {
+				throw new WebApplicationException(404);
+			}
 			
-			JSONObject entry = (JSONObject) ((JSONArray) obj.get("entities")).get(0);
+			JSONObject entry = (JSONObject) array.get(0);
 			String iban = (String) entry.get("IBAN");
 			if(iban.equals(number)){
 				retObj.put("name", entry.get("name"));
@@ -54,9 +59,9 @@ public class IBan {
 				return retObj.toString();
 			}
 			
-			throw new HTTPException(404);
+			
 		}
 		
-		throw new HTTPException(400);
+		throw new WebApplicationException(400);
 	}
 }
