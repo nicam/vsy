@@ -32,6 +32,7 @@ public class Validation {
 			if(iban.equals(number)){
 				JSONObject retObj = new JSONObject();
 				retObj.put("name", entry.get("name"));
+				retObj.put("iban", iban);
 				return retObj.toString();
 			}
 		}
