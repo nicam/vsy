@@ -2,3 +2,7 @@
 .idea
 out
 /P4/VSY/bin/*
+
+Validation.class
+
+/P4/VSY/bin/rest/iban/Validation.class
