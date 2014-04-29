@@ -17,7 +17,7 @@ import us.monoid.web.JSONResource;
 import us.monoid.web.Resty;
 
 @Path("/iban")
-public class Validation {
+public class IBan {
 	
 	@GET
 	@Path("/validate/{number}")
