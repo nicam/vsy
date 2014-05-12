@@ -6,3 +6,21 @@ out
 Validation.class
 
 /P4/VSY/bin/rest/iban/Validation.class
+
+/P5/certs/client-public.cer
+/P5/certs/client.cer
+/P5/certs/client.jks
+/P5/certs/client.p12
+/P5/certs/server-public.cer
+/P5/certs/server.jks
+
+/P5/apache-tomcat-7.0.53/work/Catalina/localhost/manager/SESSIONS.ser
+
+/P5/apache-tomcat-7.0.53/logs/catalina.2014-05-05.log
+/P5/apache-tomcat-7.0.53/logs/catalina.2014-05-12.log
+/P5/apache-tomcat-7.0.53/logs/host-manager.2014-05-12.log
+/P5/apache-tomcat-7.0.53/logs/localhost.2014-05-05.log
+/P5/apache-tomcat-7.0.53/logs/localhost.2014-05-12.log
+/P5/apache-tomcat-7.0.53/logs/localhost_access_log.2014-05-05.txt
+/P5/apache-tomcat-7.0.53/logs/localhost_access_log.2014-05-12.txt
+/P5/apache-tomcat-7.0.53/logs/manager.2014-05-12.log
