@@ -1,6 +1,6 @@
 # Generate server certificate
 keytool -genkeypair -alias serverkey -keyalg RSA -dname "CN=Web Server,OU=Application Development,O=ZHAW,L=Winterthur,S=ZH,C=CH" -keypass password -storepass password -keystore server.jks
-keytool -importcert -keystore server.jks -alias servercert -file server-public.cer -storepass password -noprompt
+keytool -importcert -keystore server.jks -alias servercert -storepass password -noprompt
 
 # generate client certificate
 keytool -genkey -v -alias clientKey -keyalg RSA -storetype PKCS12 -keystore client.p12 -dname "CN=Client,OU=Application Development,O=ZHAW,L=Winterthur,S=ZH,C=CH" -storepass password -keypass password
